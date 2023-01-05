@@ -1,0 +1,36 @@
+apply plugin: 'org.quiltmc.loom'
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+//    implementation project(":Common")
+
+    modImplementation "org.quiltmc:quilt-loader:${quilt_loader_version}"
+    modImplementation "org.quiltmc:qsl:${quilt_stdl_version}+${minecraft_version}"
+}
+
+loom {
+    runs {
+        client {
+            client()
+            setConfigName("${project.name} ${mod_name} - Client")
+            ideConfigGenerated(true)
+            runDir('../../runs/client')
+        }
+        server {
+            server()
+            setConfigName("${project.name} ${mod_name} - Server")
+            ideConfigGenerated(true)
+            runDir('../../runs/server')
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
+}
+
+processResources {
+    from project(":Common").sourceSets.main.resources
+}

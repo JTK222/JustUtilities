@@ -1,0 +1,17 @@
+modLoader="lowcodefml" #mandatory
+loaderVersion="[41,)" #mandatory
+license="All rights reserved"
+
+[[mods]] #mandatory
+modId="just_utilities" #mandatory
+version="${file.jarVersion}" #mandatory
+displayName="Just Utilities" #mandatory
+description='''
+    Allows modpacks to add Datapacks & Resource Packs
+    '''
+[[dependencies.just_utilities]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.19,)"
+    ordering="NONE"
+    side="BOTH"

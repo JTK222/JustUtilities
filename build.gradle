@@ -1,0 +1,88 @@
+buildscript {
+    repositories {
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven {
+            name = 'Forge'
+            url = uri('https://maven.minecraftforge.net')
+        }
+        maven {
+            name = 'Fabric'
+            url = uri('https://maven.fabricmc.net/')
+        }
+        maven {
+            name = 'Sponge Snapshots'
+            url = uri('https://repo.spongepowered.org/repository/maven-public/')
+        }
+        maven {
+            name = 'Quilt'
+            url = uri('https://maven.quiltmc.org/repository/release')
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7.+'
+    }
+}
+
+plugins {
+    id 'org.spongepowered.gradle.vanilla' version "${vanillaGradleVersion}" apply false
+    id 'com.matthewprenger.cursegradle' version "${curseGradleVersion}" apply false
+    // id 'com.modrinth.minotaur' version "${modrinthGradleVersion}" apply false
+    id 'org.quiltmc.loom' version "${loomVersion}" apply false
+}
+
+allprojects {
+    group = 'net.dark_roleplay'
+
+    repositories {
+        mavenCentral()
+        maven {
+            name = 'Sponge Snapshots'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
+        }
+        maven {
+            name = 'Quilt'
+            url = 'https://maven.quiltmc.org/repository/release'
+        }
+    }
+}
+
+subprojects {
+    
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.withSourcesJar()
+    java.withJavadocJar()
+
+    dependencies {
+        compileOnly group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.9'
+        annotationProcessor group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.9'
+    }
+
+    archivesBaseName = "${rootProject.name}-${project.name}-${minecraft_version}-${project.version}".toLowerCase().replace(' ', '_')
+
+    apply plugin: 'com.matthewprenger.cursegradle'
+
+    //YEET test sourceSets (thanks forge for just creating a folder for every source set that exists)
+    sourceSets.test.java.srcDirs = []
+    sourceSets.test.resources.srcDirs = []
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId project.group
+                artifactId "${rootProject.name}".toLowerCase().replace(' ', '_')
+                version project.name.toLowerCase().replace(' ', '_') + "-" + minecraft_version + "-" + project.version
+                artifact jar
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
+
+    apply from: "../gradle/" + project.name.toLowerCase() + ".build.gradle";
+}

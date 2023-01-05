@@ -1,0 +1,19 @@
+apply plugin: 'org.spongepowered.gradle.vanilla'
+
+version = "1.0"
+
+minecraft {
+    version("1.19")
+}
+
+dependencies {
+    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+}
+
+minecraft {
+    version(minecraft_version)
+}
+
+dependencies {
+    compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
+}
