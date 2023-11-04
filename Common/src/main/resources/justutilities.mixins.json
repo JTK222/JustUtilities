@@ -1,0 +1,28 @@
+{
+	"required": true,
+	"package": "net.brazier_modding.justutilities.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "justutilities.refmap.json",
+	"mixins": [
+		"BootstrapHook",
+		"BuiltinRegistriesBootstrapHook",
+		"CreativeModeTabGatherItemsHook"
+	],
+	"client": [
+		"accessors.OptionsAccessor",
+		"accessors.KeyMappingAccessor",
+		"accessors.ItemBlockRenderTypesAccessor",
+		"RenderTypesHook",
+		"EntityRenderersMixin",
+		"ReloadableResourceManagerHook",
+		"ChunkRenderHook",
+		"TextureManagerHook",
+		"GameRendererHook",
+		"MinecraftHooks",
+		"OptionsHook"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"minVersion": "0.8.5"
+}
