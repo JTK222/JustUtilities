@@ -1,0 +1,72 @@
+name: Upload Release Artifacts
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  MAVEN_UPLOAD_URL: ${{ secrets.MAVEN_UPLOAD_URL }}
+  MAVEN_UPLOAD_USERNAME: ${{ secrets.MAVEN_UPLOAD_USERNAME }}
+  MAVEN_UPLOAD_PASSWORD: ${{ secrets.MAVEN_UPLOAD_PASSWORD }}
+  CURSE_PAT: ${{ secrets.CURSE_AUTH }}
+  MODRINTH_PAT: ${{ secrets.MODRINTH_AUTH }}
+
+jobs:
+  build_common:
+    name: Build Common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          key: gradle-1.20
+          java-version: 17
+          cache: |
+            ~/.gradle/caches
+            ./.gradle/loom-cache
+            ./fabric/.gradle
+            ./common/build/libs
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      - name: Clean Environment
+        run: ./gradlew clean --no-daemon --max-workers 1
+      - name: Build Common with Gradle
+        run: ./gradlew common:assemble --no-daemon --max-workers 1
+      - name: Maven Release
+        if: ${{ env.MAVEN_UPLOAD_URL != '' }}
+        continue-on-error: true
+        run: ./gradlew common:publish --no-daemon --max-workers 1
+  build_forge:
+    if: '!cancelled()'
+    name: Build Forge
+    needs: build_common
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          key: gradle-1.20
+          cache: |
+            ~/.gradle/caches
+            ./.gradle/loom-cache
+            ./fabric/.gradle
+            ./common/build/libs
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      - name: Build Forge with Gradle
+        run: ./gradlew forge:assemble --no-daemon --max-workers 1
+      - name: Maven Release
+        if: ${{ env.MAVEN_UPLOAD_URL != '' }}
+        continue-on-error: true
+        run: ./gradlew forge:publish --no-daemon --max-workers 1
+      - name: CF & Modrinth Release
+        env:
+          BUILD_TIME: ${{ steps.current-time.outputs.formattedTime }}
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: ./gradlew forge:publishMods --no-daemon --max-workers 1

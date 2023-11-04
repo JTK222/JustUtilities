@@ -4,6 +4,9 @@ plugins {
     id 'maven-publish'
     id 'org.spongepowered.gradle.vanilla'
 }
+
+def ENV = System.getenv()
+
 base {
     archivesName = "${mod_id}-common"
 }
@@ -30,7 +33,10 @@ publishing {
         maven {
             name = "BrazierModdingRepository"
             url = uri("https://maven.brazier-modding.net/snapshots")
-            credentials(PasswordCredentials)
+            credentials {
+                username = ENV.MAVEN_UPLOAD_USERNAME
+                password = ENV.MAVEN_UPLOAD_PASSWORD
+            }
             authentication {
                 basic(BasicAuthentication)
             }

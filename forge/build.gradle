@@ -6,6 +6,9 @@ plugins {
 
     id "me.modmuss50.mod-publish-plugin"
 }
+
+def ENV = System.getenv()
+
 base {
     archivesName = "${mod_id}-forge"
 }
@@ -112,7 +115,10 @@ publishing {
         maven {
             name = "BrazierModdingRepository"
             url = uri("https://maven.brazier-modding.net/snapshots")
-            credentials(PasswordCredentials)
+            credentials {
+                username = ENV.MAVEN_UPLOAD_USERNAME
+                password = ENV.MAVEN_UPLOAD_PASSWORD
+            }
             authentication {
                 basic(BasicAuthentication)
             }
@@ -124,23 +130,24 @@ publishMods {
     file = jar.archiveFile
 
     if(new File("../", "Changelog.md").exists())
-        changelog = new File("../", "Changelog.md").text
+        changelog = new File("./../", "Changelog.md").text
+    else changelog = ""
 
     type = STABLE
     modLoaders.add("forge")
 
-    displayName = "$project.ext.mod_name - v${simple_version}"
+    displayName = "$project.ext.mod_name - Forge ${minecraft_version} - v${simple_version}"
 
     curseforge {
         projectId = curse_project
         projectSlug = curse_slug // Required for discord webhook
-        accessToken = project.findProperty('curse_auth')
+        accessToken = ENV.CURSE_PAT
         minecraftVersions.add("1.20.1")
     }
 
     modrinth {
         projectId = modrinth_project
-        accessToken = project.findProperty('modrinth_auth')
+        accessToken = ENV.MODRINTH_PAT
         minecraftVersions.add("1.20.1")
     }
 }

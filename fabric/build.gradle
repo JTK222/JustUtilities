@@ -4,9 +4,14 @@ plugins {
     id 'maven-publish'
     id 'fabric-loom'
 
+    id "me.modmuss50.mod-publish-plugin"
+
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.modrinth.minotaur" version "2.+"
 }
+
+def ENV = System.getenv()
+
 base {
     archivesName = "${mod_id}-fabric"
 }
@@ -70,7 +75,10 @@ publishing {
         maven {
             name = "BrazierModdingRepository"
             url = uri("https://maven.brazier-modding.net/snapshots")
-            credentials(PasswordCredentials)
+            credentials {
+                username = ENV.MAVEN_UPLOAD_USERNAME
+                password = ENV.MAVEN_UPLOAD_PASSWORD
+            }
             authentication {
                 basic(BasicAuthentication)
             }
@@ -78,28 +86,22 @@ publishing {
     }
 }
 
-curseforge{
-    apiKey = project.findProperty('curse_auth')
-    project{
-        id = project.findProperty('curse_project')
-        releaseType = project.findProperty('curse_release_type_fabric')
-        changelogType = 'markdown'
-        if(new File("../", "Changelog.md").exists())
-            changelog = new File("../", "Changelog.md").text
+publishMods {
+    file = jar.archiveFile
 
-        Arrays.asList(project.findProperty('curse_versions').toString().split(",")).forEach(version -> addGameVersion(version));
-        addGameVersion 'Fabric'
+    if(new File("../", "Changelog.md").exists())
+        changelog = new File("../", "Changelog.md").text
 
-        mainArtifact(remapJar) {
-            displayName = "$project.ext.mod_name - Fabric - $project.ext.minecraft_version - v$project.simple_version"
-        }
+    type = STABLE
+    modLoaders.add("forge")
 
-        afterEvaluate{
-            uploadTask.dependsOn(remapJar)
-        }
-        options{
-            forgeGradleIntegration = false;
-        }
+    displayName = "$project.ext.mod_name - v${simple_version}"
+
+    curseforge {
+        projectId = curse_project
+        projectSlug = curse_slug // Required for discord webhook
+        accessToken = project.findProperty('curse_auth')
+        minecraftVersions.add("1.20.1")
     }
 }
 
