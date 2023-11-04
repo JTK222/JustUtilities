@@ -22,11 +22,11 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          key: gradle-1.20
           java-version: 17
           cache: gradle
       - name: Cache gradle
         id: cache-gradle
+        key: gradle-1.20
         uses: actions/cache@v3
         with:
           path: |
@@ -60,6 +60,7 @@ jobs:
           cache: gradle
       - name: Cache gradle
         id: cache-gradle
+        key: gradle-1.20
         uses: actions/cache@v3
         with:
           path: |
