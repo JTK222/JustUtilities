@@ -24,7 +24,12 @@ jobs:
           distribution: 'temurin'
           key: gradle-1.20
           java-version: 17
-          cache: |
+          cache: gradle
+      - name: Cache gradle
+        id: cache-gradle
+        uses: actions/cache@v3
+        with:
+          path: |
             ~/.gradle/caches
             ./.gradle/loom-cache
             ./fabric/.gradle
@@ -52,7 +57,12 @@ jobs:
           distribution: 'temurin'
           java-version: 17
           key: gradle-1.20
-          cache: |
+          cache: gradle
+      - name: Cache gradle
+        id: cache-gradle
+        uses: actions/cache@v3
+        with:
+          path: |
             ~/.gradle/caches
             ./.gradle/loom-cache
             ./fabric/.gradle
