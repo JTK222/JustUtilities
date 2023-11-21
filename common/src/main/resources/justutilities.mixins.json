@@ -12,14 +12,15 @@
 		"accessors.OptionsAccessor",
 		"accessors.KeyMappingAccessor",
 		"accessors.ItemBlockRenderTypesAccessor",
-		"RenderTypesHook",
-		"EntityRenderersMixin",
 		"ReloadableResourceManagerHook",
-		"ChunkRenderHook",
-		"TextureManagerHook",
-		"GameRendererHook",
-		"MinecraftHooks",
-		"OptionsHook"
+		"OptionsHook",
+		"client.RenderTypesHook",
+		"client.EntityRenderersMixin",
+		"client.ChunkRenderHook",
+		"client.TextureManagerHook",
+		"client.GameRendererHook",
+		"client.MinecraftHooks",
+		"client.ModelManagerHook"
 	],
 	"injectors": {
 		"defaultRequire": 1

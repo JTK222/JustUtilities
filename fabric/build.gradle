@@ -5,9 +5,6 @@ plugins {
     id 'fabric-loom'
 
     id "me.modmuss50.mod-publish-plugin"
-
-    id "com.matthewprenger.cursegradle" version "1.4.0"
-    id "com.modrinth.minotaur" version "2.+"
 }
 
 def ENV = System.getenv()
@@ -23,8 +20,8 @@ dependencies {
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation project(":common")
 
-    implementation group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.9'
-    annotationProcessor group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.9'
+    implementation group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.11'
+    annotationProcessor group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.11'
 }
 
 loom {
@@ -93,7 +90,7 @@ publishMods {
         changelog = new File("../", "Changelog.md").text
 
     type = STABLE
-    modLoaders.add("forge")
+    modLoaders.add("fabric")
 
     displayName = "$project.ext.mod_name - v${simple_version}"
 
@@ -104,18 +101,3 @@ publishMods {
         minecraftVersions.add("1.20.1")
     }
 }
-
-modrinth {
-    token = project.findProperty('modrinth_auth')
-    projectId = project.findProperty('modrinth_project')
-    versionType = project.findProperty('modrinth_release_type_fabric')
-    versionName = "$project.ext.mod_name - v${simple_version}"
-    version = "${version}_fabric"
-    uploadFile = remapJar
-    gameVersions = Arrays.asList(project.findProperty('modrinth_versions').toString().split(","))
-    loaders = ["fabric"]
-
-    if(new File("../", "Changelog.md").exists())
-        changelog = new File("../", "Changelog.md").text
-}
-

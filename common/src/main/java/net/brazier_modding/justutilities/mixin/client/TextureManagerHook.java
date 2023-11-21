@@ -1,4 +1,4 @@
-package net.brazier_modding.justutilities.mixin;
+package net.brazier_modding.justutilities.mixin.client;
 
 import net.brazier_modding.justutilities.events.hooks.LifecycleHooks;
 import net.minecraft.client.renderer.texture.TextureManager;

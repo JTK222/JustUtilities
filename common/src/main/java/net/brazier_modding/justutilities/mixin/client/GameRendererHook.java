@@ -1,4 +1,4 @@
-package net.brazier_modding.justutilities.mixin;
+package net.brazier_modding.justutilities.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
