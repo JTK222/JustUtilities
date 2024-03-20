@@ -1,6 +1,6 @@
 package net.brazier_modding.justutilities.mixin.client;
 
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientLifecycleHooks;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.EntityType;

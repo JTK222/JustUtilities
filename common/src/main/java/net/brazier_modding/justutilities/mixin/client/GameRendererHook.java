@@ -1,8 +1,7 @@
 package net.brazier_modding.justutilities.mixin.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
-import net.brazier_modding.justutilities.events.hooks.LifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientRenderHooks;
 import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,6 +16,6 @@ public class GameRendererHook {
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Gui;render(Lnet/minecraft/client/gui/GuiGraphics;F)V", shift = At.Shift.AFTER)
 	)
 	private void justutilities_render(float partialTicks, long $$1, boolean $$2, CallbackInfo callback) {
-		ClientLifecycleHooks.hudRenderHook(new PoseStack(), partialTicks);
+		ClientRenderHooks.hudRender(new PoseStack(), partialTicks);
 	}
 }

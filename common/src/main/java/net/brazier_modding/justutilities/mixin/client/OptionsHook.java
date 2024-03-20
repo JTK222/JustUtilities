@@ -1,7 +1,6 @@
-package net.brazier_modding.justutilities.mixin;
+package net.brazier_modding.justutilities.mixin.client;
 
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
-import net.brazier_modding.justutilities.events.hooks.LifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientRuntimeHooks;
 import net.brazier_modding.justutilities.mixin.accessors.KeyMappingAccessor;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.OptionInstance;
@@ -34,7 +33,7 @@ public abstract class OptionsHook {
 			at = @At("HEAD")
 	)
 	private void justutilities_loadOptions(CallbackInfo ci) {
-		Set<KeyMapping> keybinds = ClientLifecycleHooks.gatherKeyMappingsHook();
+		Set<KeyMapping> keybinds = ClientRuntimeHooks.gatherKeyMappingsHook();
 
 		this.keyMappings = ArrayUtils.addAll(keyMappings, keybinds.toArray(new KeyMapping[keybinds.size()]));
 

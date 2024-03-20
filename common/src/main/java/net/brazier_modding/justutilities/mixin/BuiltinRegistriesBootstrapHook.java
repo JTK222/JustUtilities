@@ -1,7 +1,7 @@
 package net.brazier_modding.justutilities.mixin;
 
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
 import net.brazier_modding.justutilities.events.hooks.LifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientLifecycleHooks;
 import net.minecraft.core.registries.BuiltInRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,6 +25,6 @@ public class BuiltinRegistriesBootstrapHook {
 	)
 	private static void justutilities_postBootstrap(CallbackInfo callback) {
 		LifecycleHooks.postRegistryBootstrapHook();
-		ClientLifecycleHooks.postRegistryBootstrapHook();
+		ClientLifecycleHooks.postRegistryBootstrap();
 	}
 }

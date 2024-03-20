@@ -84,7 +84,7 @@ publishing {
 }
 
 publishMods {
-    file = jar.archiveFile
+    file = remapJar.archiveFile
 
     if(new File("../", "Changelog.md").exists())
         changelog = new File("../", "Changelog.md").text
@@ -92,12 +92,18 @@ publishMods {
     type = STABLE
     modLoaders.add("fabric")
 
-    displayName = "$project.ext.mod_name - v${simple_version}"
+    displayName = "$project.ext.mod_name - Fabric ${minecraft_version} - v${simple_version}"
 
     curseforge {
         projectId = curse_project
         projectSlug = curse_slug // Required for discord webhook
         accessToken = project.findProperty('curse_auth')
         minecraftVersions.add("1.20.1")
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
     }
 }

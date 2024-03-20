@@ -1,6 +1,6 @@
 package net.brazier_modding.justutilities.mixin;
 
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientLifecycleHooks;
 import net.minecraft.world.item.CreativeModeTab;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

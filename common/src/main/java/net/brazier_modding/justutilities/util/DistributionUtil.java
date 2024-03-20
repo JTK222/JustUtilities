@@ -17,6 +17,7 @@ public class DistributionUtil {
 				dist = Distribution.SERVER;
 			}
 		}
+
 		return DistributionUtil.dist == Distribution.CLIENT;
 	}
 

@@ -16,7 +16,7 @@ public class Event<E> {
 		return new Event<E>(identifier);
 	}
 
-	private Event(ResourceLocation eventName){
+	protected Event(ResourceLocation eventName){
 		this.identifier = eventName;
 	}
 

@@ -10,16 +10,23 @@ def ENV = System.getenv()
 base {
     archivesName = "${mod_id}-common"
 }
-minecraft {
+minecraft{
     version(minecraft_version)
     if(file("src/main/resources/${mod_id}.accesswidener").exists()){
         accessWideners(file("src/main/resources/${mod_id}.accesswidener"))
+    }
+    runs {
+        server()
+        client()
     }
 }
 
 dependencies {
      compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
      implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+
+    implementation group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.9'
+    annotationProcessor group: 'org.kohsuke.metainf-services', name: 'metainf-services', version: '1.9'
 }
 
 publishing {

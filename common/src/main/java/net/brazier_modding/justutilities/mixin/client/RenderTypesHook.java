@@ -1,7 +1,6 @@
 package net.brazier_modding.justutilities.mixin.client;
 
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
-import net.brazier_modding.justutilities.events.hooks.LifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientLifecycleHooks;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

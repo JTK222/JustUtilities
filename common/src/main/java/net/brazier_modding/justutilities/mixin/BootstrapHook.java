@@ -1,7 +1,7 @@
 package net.brazier_modding.justutilities.mixin;
 
-import net.brazier_modding.justutilities.events.hooks.ClientLifecycleHooks;
 import net.brazier_modding.justutilities.events.hooks.LifecycleHooks;
+import net.brazier_modding.justutilities.events.hooks.client.ClientLifecycleHooks;
 import net.minecraft.server.Bootstrap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -32,6 +32,6 @@ public class BootstrapHook {
 	)
 	private static void justutilities_postBootstrap(CallbackInfo callback) {
 		LifecycleHooks.postBootstrapHook();
-		ClientLifecycleHooks.postBootstrapHook();
+		ClientLifecycleHooks.postBootstrap();
 	}
 }

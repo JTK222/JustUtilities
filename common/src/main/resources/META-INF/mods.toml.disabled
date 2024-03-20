@@ -1,0 +1,17 @@
+modLoader="lowcodefml" #mandatory
+loaderVersion="[1,)" #mandatory
+license="ARR"
+
+[[mods]] #mandatory
+modId="just_utilities" #mandatory
+version="${version}" #mandatory
+displayName="${mod_name}" #mandatory
+logoFile = "${mod_id}.png"
+authors = "${mod_author}"
+description = '''${description}'''
+[[dependencies.just_utilities]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
